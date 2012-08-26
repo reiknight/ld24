@@ -21,6 +21,11 @@ public class Zombie extends Sprite {
         zombieGroup = 1;
     }
     
+    public Zombie(int x, int y) {
+        this();
+        this.setPosition(new Vector2f(x * (Integer) C.Logic.TILE_SIZE.data,
+                y * (Integer) C.Logic.TILE_SIZE.data));
+    }
         
     @Override
     public void render(GameContainer gc, Graphics g) {

@@ -31,7 +31,9 @@ public class C {
         AVATAR("avatar", "resources/textures/zombie_0.png"),
         BUTTON("button", "resources/textures/button.png"),
         CROSSHAIR("crosshair", "resources/textures/crosshair.png"),
-        WALL("wall", "resources/textures/wall.png");
+        WALL("wall", "resources/textures/wall.png"),
+        TILE_SET("tile_set", "resources/textures/tile_set.png"),
+        ENEMY("enemy", "resources/textures/enemy.png");
 
         public String name;
         public String path;

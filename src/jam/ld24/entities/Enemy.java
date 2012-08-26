@@ -14,6 +14,7 @@ public class Enemy extends Sprite {
     private boolean active;
 
     public Enemy() {
+        super(C.Textures.ENEMY.name);
         name =  C.Entities.ENEMY.name + id++;
         group = C.Groups.ENEMIES.name;
         alive = true;
@@ -21,7 +22,8 @@ public class Enemy extends Sprite {
     
     public Enemy(int x, int y) {
         this();
-        this.setPosition(new Vector2f(x*32,y*32));
+        this.setPosition(new Vector2f(x * (Integer) C.Logic.TILE_SIZE.data,
+                y * (Integer) C.Logic.TILE_SIZE.data));
     }
 
     public boolean isAlive() {
