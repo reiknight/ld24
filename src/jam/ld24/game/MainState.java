@@ -2,9 +2,11 @@ package jam.ld24.game;
  
 import infinitedog.frisky.events.InputEvent;
 import infinitedog.frisky.game.ManagedGameState;
+import jam.ld24.entities.Wall;
 import jam.ld24.entities.Zombie;
 import jam.ld24.game.editor.EditorException;
 import jam.ld24.game.editor.EditorManager;
+import jam.ld24.tiles.CollisionMap;
 import jam.ld24.tiles.TileMap;
 import jam.ld24.tiles.TileSet;
 import java.util.logging.Level;
@@ -21,6 +23,9 @@ public class MainState extends ManagedGameState {
     private EditorManager edm = EditorManager.getInstance();
     Zombie ivan;
     Zombie david;
+    Wall wall;
+    TileMap map;
+    CollisionMap collisionMap;
     
     public MainState(int stateID)
     {
@@ -42,6 +47,7 @@ public class MainState extends ManagedGameState {
                 
         tm.getInstance().addTexture(C.Textures.ZOMBIE.name, C.Textures.ZOMBIE.path);
         tm.getInstance().addTexture(C.Textures.AVATAR.name, C.Textures.AVATAR.path);
+        tm.getInstance().addTexture(C.Textures.WALL.name, C.Textures.WALL.path);
         
         // Init zombies
         ivan = new Zombie();
@@ -52,20 +58,41 @@ public class MainState extends ManagedGameState {
         
         em.addEntity(ivan.getName(), ivan);
         em.addEntity(david.getName(), david);
-    }
-    
-    @Override
-    public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException {
+        
         TileSet test = new TileSet("test", "resources/textures/tileset_test.png", 32);
+        
         int[][] mapArray = {};
+        
         try {
             mapArray = edm.readMap("test");
         } catch (EditorException ex) {
             Logger.getLogger(MainState.class.getName()).log(Level.SEVERE, null, ex);
         }
-        TileMap map = new TileMap(mapArray, test);
-        map.render();
+        map = new TileMap(mapArray, test);
         
+        try {
+            mapArray = edm.readMap("test");
+        } catch (EditorException ex) {
+            Logger.getLogger(MainState.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        collisionMap = new CollisionMap(mapArray);
+        
+        // Init walls
+        for(int i = 0; i < mapArray.length; i++) {
+            for(int j = 0; j < mapArray[i].length; j++) {
+                if(mapArray[i][j] == 1) {
+                    wall = new Wall();
+                    wall.setPosition(new Vector2f(j * (Integer) C.Logic.TILE_SIZE.data, 
+                            i * (Integer) C.Logic.TILE_SIZE.data));
+                    em.addEntity(wall.getName(), wall);
+                }
+            }
+        }
+    }
+    
+    @Override
+    public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException {
+        map.render();
         em.render(gc, g);
     }
 
@@ -73,6 +100,7 @@ public class MainState extends ManagedGameState {
     public void update(GameContainer gc, StateBasedGame game, int delta) throws SlickException {
         em.setGameState(C.States.MAIN_STATE.name);
         em.update(gc, delta);
+        
         if(evm.isHappening(C.Events.CLOSE_WINDOW.name, gc)) {
             gc.exit();
         }

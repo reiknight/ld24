@@ -29,7 +29,8 @@ public class C {
         ZOMBIE("zombie", "resources/textures/zombie.png"),
         AVATAR("avatar", "resources/textures/zombie_0.png"),
         BUTTON("button", "resources/textures/button.png"),
-        CROSSHAIR("crosshair", "resources/textures/crosshair.png");
+        CROSSHAIR("crosshair", "resources/textures/crosshair.png"),
+        WALL("wall", "resources/textures/wall.png");
 
         public String name;
         public String path;
@@ -44,7 +45,8 @@ public class C {
         PLAYER("player"),
         ZOMBIE("zombie"),
         CROSSHAIR("crosshair"),
-        ENEMY("enemy");
+        ENEMY("enemy"),
+        WALL("wall");
 
         public String name;
 
