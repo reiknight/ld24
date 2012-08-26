@@ -2,10 +2,12 @@ package jam.ld24.game;
  
 import infinitedog.frisky.events.InputEvent;
 import infinitedog.frisky.game.ManagedGameState;
+import jam.ld24.entities.Zombie;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class MainState extends ManagedGameState {
@@ -21,11 +23,20 @@ public class MainState extends ManagedGameState {
     public void init(GameContainer gc, StateBasedGame game) throws SlickException {
         em.setGameState(C.States.MAIN_STATE.name);
         evm.addEvent(C.Events.CLOSE_WINDOW.name, new InputEvent(InputEvent.KEYBOARD, Input.KEY_ESCAPE));
+        
+        tm.addTexture(C.Textures.ZOMBIE.name, C.Textures.ZOMBIE.path);
     }
     
     @Override
     public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException {
-
+        Zombie ivan = new Zombie();
+        Zombie david = new Zombie();
+        
+        ivan.setPosition(new Vector2f(50, 50));
+        david.setPosition(new Vector2f(100, 100));
+        
+        ivan.render(gc, g);
+        david.render(gc, g);
     }
 
     @Override

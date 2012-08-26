@@ -17,7 +17,8 @@ public class C {
     }
     
     public static enum Textures {
-        START_BACKGROUND("start_background", "resources/inicio.jpg");
+        START_BACKGROUND("start_background", "resources/inicio.jpg"),
+        ZOMBIE("zombie", "resources/textures/zombie.png");
 
         public String name;
         public String path;
@@ -29,7 +30,8 @@ public class C {
     }
     
     public static enum Entities {
-        PLAYER("player");
+        PLAYER("player"),
+        ZOMBIE("zombie");
 
         public String name;
 
@@ -39,7 +41,8 @@ public class C {
     }
     
     public static enum Groups {
-        BULLETS("bullets");
+        BULLETS("bullets"),
+        ZOMBIES("zombies");
         
         public String name;
 
