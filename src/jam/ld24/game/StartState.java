@@ -74,5 +74,8 @@ public class StartState extends ManagedGameState {
                 game.enterState(C.States.MAIN_STATE.value, new FadeOutTransition(), new FadeInTransition());
             }
         }
+        if(evm.isHappening(C.Events.CLOSE_WINDOW.name, gc)) {
+            gc.exit();
+        }
     }   
 }

@@ -77,6 +77,7 @@ public class Level {
                 if(i == 0) {
                     Zombie avatar = new Zombie(x, y);
                     avatar.setActive(true);
+                    avatar.setCollisionMap(this.cm);
                     em.addEntity(avatar.getName(), avatar);
                 }
                 else {

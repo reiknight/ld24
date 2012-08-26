@@ -3,6 +3,7 @@ package jam.ld24.entities;
 import infinitedog.frisky.entities.Sprite;
 import infinitedog.frisky.events.EventManager;
 import jam.ld24.game.C;
+import jam.ld24.tiles.CollisionMap;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Vector2f;
@@ -13,6 +14,7 @@ public class Zombie extends Sprite {
     private boolean alive;
     private boolean active;
     private int zombieGroup;
+    private CollisionMap cm;
         
     public Zombie() {
         super(C.Textures.ZOMBIE.name);
@@ -39,16 +41,28 @@ public class Zombie extends Sprite {
         EventManager evm = EventManager.getInstance();
         float x = getX();
         float y = getY();
+        float oldX = x;
+        float oldY = y;
+        float vx = 0;
+        float vy = 0;
     
         //Player movement
         if(evm.isHappening(C.Events.MOVE_LEFT.name, gc) && isActive()) {
-            x -= speed * delta;
+            vx -= speed * delta;
         }else if(evm.isHappening(C.Events.MOVE_RIGHT.name, gc) && isActive()) {
-            x += speed * delta;
+            vx += speed * delta;
         } else if(evm.isHappening(C.Events.MOVE_UP.name, gc) && isActive()) {
-            y -= speed * delta;
+            vy -= speed * delta;
         }else if(evm.isHappening(C.Events.MOVE_DOWN.name, gc) && isActive()) {
-            y += speed * delta;
+            vy += speed * delta;
+        }
+        
+        x += vx;
+        y += vy;
+        
+        if(this.cm.collidesWith(this)) {
+            x -= 10 * vx * delta;
+            y -= 10 * vy * delta;
         }
         
         setPosition(new Vector2f(x, y));
@@ -78,4 +92,7 @@ public class Zombie extends Sprite {
         this.zombieGroup = zombieGroup;
     }
 
+    public void setCollisionMap(CollisionMap collisionMap) {
+        this.cm = collisionMap;
+    }
 }
