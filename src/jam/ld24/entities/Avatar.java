@@ -1,18 +1,15 @@
 package jam.ld24.entities;
 
-import infinitedog.frisky.entities.Sprite;
 import infinitedog.frisky.textures.TextureManager;
 import jam.ld24.game.C;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
-public class Zombie extends Sprite {
-    private static int id = 0;
-        
-    public Zombie() {
-        super(C.Textures.ZOMBIE.name);
-        name =  C.Entities.ZOMBIE.name + id++;
-        group = C.Groups.ZOMBIES.name;
+public class Avatar extends Zombie {
+    
+    public Avatar() {
+        super();
+        this.setTexture(C.Textures.AVATAR.name);
     }
     
     @Override

@@ -18,7 +18,8 @@ public class C {
     
     public static enum Textures {
         START_BACKGROUND("start_background", "resources/inicio.jpg"),
-        ZOMBIE("zombie", "resources/textures/zombie.png");
+        ZOMBIE("zombie", "resources/textures/zombie.png"),
+        AVATAR("avatar", "resources/textures/zombie_0.png");
 
         public String name;
         public String path;
