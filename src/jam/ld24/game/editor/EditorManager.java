@@ -27,7 +27,7 @@ public class EditorManager {
      * Method for get the Instance of the Manager.
      * @return The unique instance of EditorManager
      */
-    public EditorManager getInstance() {
+    public static EditorManager getInstance() {
         if(em == null) {
             em = new EditorManager();
         }

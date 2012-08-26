@@ -34,6 +34,10 @@ public class TileMap {
             return map[x][y];
         }
     }
+
+    public int[][] getMap() {
+        return map;
+    }
     
     
 }

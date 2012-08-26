@@ -2,7 +2,6 @@ package jam.ld24.game;
  
 import infinitedog.frisky.events.InputEvent;
 import infinitedog.frisky.game.ManagedGameState;
-import jam.ld24.entities.Avatar;
 import jam.ld24.entities.Zombie;
 import jam.ld24.tiles.TileMap;
 import jam.ld24.tiles.TileSet;
@@ -15,7 +14,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class MainState extends ManagedGameState {
     private boolean paused = false;
-    Avatar ivan;
+    Zombie ivan;
     Zombie david;
     
     public MainState(int stateID)
@@ -40,8 +39,10 @@ public class MainState extends ManagedGameState {
         tm.getInstance().addTexture(C.Textures.AVATAR.name, C.Textures.AVATAR.path);
         
         // Init zombies
-        ivan = new Avatar();
+        ivan = new Zombie();
+        ivan.setActive(true);
         david = new Zombie();
+        david.setActive(true);
         
         ivan.setPosition(new Vector2f(50, 50));
         david.setPosition(new Vector2f(100, 100));

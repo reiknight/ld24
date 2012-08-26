@@ -43,7 +43,8 @@ public class C {
     public static enum Entities {
         PLAYER("player"),
         ZOMBIE("zombie"),
-        CROSSHAIR("crosshair");
+        CROSSHAIR("crosshair"),
+        ENEMY("enemy");
 
         public String name;
 
@@ -55,7 +56,8 @@ public class C {
     public static enum Groups {
         BULLETS("bullets"),
         ZOMBIES("zombies"),
-        BUTTONS("buttons");
+        BUTTONS("buttons"),
+        ENEMIES("enemies");
         
         public String name;
 
