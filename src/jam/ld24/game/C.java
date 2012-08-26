@@ -1,5 +1,7 @@
 package jam.ld24.game;
 
+import org.newdawn.slick.geom.Vector2f;
+
 public class C {
     public static final boolean DEBUG_MODE = true;
     public static final boolean GOD_MODE = false;
@@ -11,7 +13,9 @@ public class C {
         MOVE_LEFT("move_left"),
         MOVE_RIGHT("move_right"),
         MOVE_UP("move_up"),
-        MOVE_DOWN("move_down");
+        MOVE_DOWN("move_down"),
+        CLICK_BUTTON("click_button"),
+        CROSSHAIR_MOVED("crosshair_moved");
         
         public String name;
 
@@ -21,9 +25,11 @@ public class C {
     }
     
     public static enum Textures {
-        START_BACKGROUND("start_background", "resources/inicio.jpg"),
+        START_BACKGROUND("start_background", "resources/textures/start_background.png"),
         ZOMBIE("zombie", "resources/textures/zombie.png"),
-        AVATAR("avatar", "resources/textures/zombie_0.png");
+        AVATAR("avatar", "resources/textures/zombie_0.png"),
+        BUTTON("button", "resources/textures/button.png"),
+        CROSSHAIR("crosshair", "resources/textures/crosshair.png");
 
         public String name;
         public String path;
@@ -36,7 +42,8 @@ public class C {
     
     public static enum Entities {
         PLAYER("player"),
-        ZOMBIE("zombie");
+        ZOMBIE("zombie"),
+        CROSSHAIR("crosshair");
 
         public String name;
 
@@ -47,7 +54,8 @@ public class C {
     
     public static enum Groups {
         BULLETS("bullets"),
-        ZOMBIES("zombies");
+        ZOMBIES("zombies"),
+        BUTTONS("buttons");
         
         public String name;
 
@@ -69,7 +77,8 @@ public class C {
     }
     
     public static enum States {
-        MAIN_STATE("Main", 0);
+        START_STATE("start", 0),
+        MAIN_STATE("main", 1);
         
         public String name;
         public int value;
@@ -81,12 +90,29 @@ public class C {
     }
     
      public static enum Logic {
-        ZOMBIE_SPEED((float)0.5);
+        ZOMBIE_SPEED((float)0.5),
+        SELECT_OPTION_DELAY(500);
         
         public Object data;
         
         private Logic(Object data) {
             this.data = data;
+        }
+    }
+     
+     public static enum Buttons {
+        START_GAME(Textures.BUTTON.name, "Start", new Vector2f(600, 175), new Vector2f(45, 25));
+        
+        public String textureName;
+        public String label;
+        public Vector2f position;
+        public Vector2f labelPosition;
+        
+        Buttons(String textureName, String label, Vector2f position, Vector2f labelPosition) {
+            this.textureName = textureName;
+            this.label = label;
+            this.position = position;
+            this.labelPosition = labelPosition;
         }
     }
 }
