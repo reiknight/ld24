@@ -4,6 +4,7 @@ import infinitedog.frisky.events.InputEvent;
 import infinitedog.frisky.game.ManagedGameState;
 import jam.ld24.entities.Avatar;
 import jam.ld24.entities.Zombie;
+import jam.ld24.tiles.TileMap;
 import jam.ld24.tiles.TileSet;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -54,13 +55,9 @@ public class MainState extends ManagedGameState {
         em.render(gc, g);
 
         TileSet test = new TileSet("test", "resources/textures/tileset_test.png", 32);
-        test.render(0, 0, 32);
-        test.render(1, 32, 32);
-        test.render(2, 64, 32);
-        test.render(3, 96, 32);
-        
-        test.render(0, 0, 128, 2, 1);
-        test.render(0, 0, 192, 1, 2);
+        int[][] mapArray = {{1,2,1,2},{3,0,3,0}};
+        TileMap map = new TileMap(mapArray, test);
+        map.render();
     }
 
     @Override

@@ -70,6 +70,6 @@ public class TileSet {
         j = (id % cols) * tileSize;
         
         subImage = this.image.getSubImage(j, i, tileSize * n, tileSize * m);
-        subImage.draw(x, y);
+        subImage.draw(x*tileSize, y*tileSize);
     }
 }
