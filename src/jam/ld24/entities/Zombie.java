@@ -1,20 +1,18 @@
 package jam.ld24.entities;
 
 import infinitedog.frisky.entities.Sprite;
-import infinitedog.frisky.textures.TextureManager;
 import jam.ld24.game.C;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
 public class Zombie extends Sprite {
     private static int id = 0;
-    protected float speed;
+    protected float speed = (Float) C.Logic.ZOMBIE_SPEED.data;
         
     public Zombie() {
         super(C.Textures.ZOMBIE.name);
         name =  C.Entities.ZOMBIE.name + id++;
         group = C.Groups.ZOMBIES.name;
-        speed = 0.25f;
     }
     
     @Override

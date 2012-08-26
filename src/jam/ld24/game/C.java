@@ -79,4 +79,14 @@ public class C {
             this.value = value;
         }
     }
+    
+     public static enum Logic {
+        ZOMBIE_SPEED((float)0.5);
+        
+        public Object data;
+        
+        private Logic(Object data) {
+            this.data = data;
+        }
+    }
 }
