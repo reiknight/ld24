@@ -7,7 +7,11 @@ public class C {
     public static final int SCREEN_WIDTH = 800;
     
     public static enum Events {
-        CLOSE_WINDOW("close_window");
+        CLOSE_WINDOW("close_window"),
+        MOVE_LEFT("move_left"),
+        MOVE_RIGHT("move_right"),
+        MOVE_UP("move_up"),
+        MOVE_DOWN("move_down");
         
         public String name;
 

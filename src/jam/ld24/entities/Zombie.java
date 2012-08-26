@@ -8,11 +8,13 @@ import org.newdawn.slick.Graphics;
 
 public class Zombie extends Sprite {
     private static int id = 0;
+    protected float speed;
         
     public Zombie() {
         super(C.Textures.ZOMBIE.name);
         name =  C.Entities.ZOMBIE.name + id++;
         group = C.Groups.ZOMBIES.name;
+        speed = 0.25f;
     }
     
     @Override
