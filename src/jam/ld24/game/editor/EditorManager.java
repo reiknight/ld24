@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * Level Editor Manager.
@@ -36,11 +38,11 @@ public class EditorManager {
      * Method for write a map.
      * @param name 
      */
-    public void writeMap(String name, int[][] map) throws MapEditorException {
+    public void writeMap(String name, int[][] map) throws EditorException {
         File dir = new File("maps");
         dir.mkdir();
         System.out.println(dir.getAbsolutePath());
-        File f = new File(dir, name);
+        File f = new File(dir, name+".map");
         FileWriter fw = null;
         PrintWriter pw = null;
         if(f.exists()) {
@@ -53,31 +55,53 @@ public class EditorManager {
             
             for (int i = 0; i < map.length; i++) {
                 for (int j = 0; j < map[i].length; j++) {
-                    pw.print(map[i][j]);
+                    pw.print(map[i][j] + " ");
                 }
                 pw.println();
             }
             pw.flush();
         } catch(IOException ioe) {
-            ioe.printStackTrace();
             throw new MapEditorException("Error in saving the map");
         } finally {
             try {
                 fw.close();
                 pw.close();
             } catch(IOException ioe) {
-                throw new MapEditorException("Error closing archives");
+                throw new EditorException("Error closing archives");
             }
         }
     }
     
-    
-    public static void main(String[] args) throws Exception {
-        System.out.println("PRUEBAS DEL EDITOR:");
-        System.out.println("---------------------");
-        int[][] map = {{1,2,3},{4,5,6},{7,8,9}};
-        
-        EditorManager editor = new EditorManager();
-        editor.writeMap("Catacrocker.map", map);
+    public int[][] readMap(String name) throws EditorException {
+        File dir = new File("maps");
+        File f = new File(dir,name+".map");
+ 
+        Scanner sc = null;
+        try {
+            sc = new Scanner(f);
+            ArrayList<ArrayList<Integer>> list = new ArrayList();
+            while(sc.hasNextInt()) {
+                ArrayList<Integer> row = new ArrayList<Integer>();
+                row.add(sc.nextInt());
+                String s = sc.findInLine("[0-9]+");
+                while(s != null) {
+                    row.add(Integer.parseInt(s));
+                    s = sc.findInLine("[0-9]+");
+                }
+                list.add(row);
+            }
+            
+            int[][] map = new int[list.size()][];
+            for(int i = 0; i < map.length; i++) {
+                ArrayList ar = list.get(i);
+                map[i] = new int[ar.size()];
+                for(int j = 0; j < map[i].length; j++) {
+                    map[i][j] = (Integer) ar.get(j);
+                }
+            }
+            return map;
+        } catch(IOException ioe) {
+            throw new MapEditorException("Error in getting the map");
+        }
     }
 }
