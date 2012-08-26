@@ -92,7 +92,7 @@ public class C {
     }
     
      public static enum Logic {
-        ZOMBIE_SPEED((float)0.5),
+        ZOMBIE_SPEED((float)0.25),
         SELECT_OPTION_DELAY(500);
         
         public Object data;

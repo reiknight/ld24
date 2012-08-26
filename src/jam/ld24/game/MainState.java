@@ -3,8 +3,12 @@ package jam.ld24.game;
 import infinitedog.frisky.events.InputEvent;
 import infinitedog.frisky.game.ManagedGameState;
 import jam.ld24.entities.Zombie;
+import jam.ld24.game.editor.EditorException;
+import jam.ld24.game.editor.EditorManager;
 import jam.ld24.tiles.TileMap;
 import jam.ld24.tiles.TileSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -14,6 +18,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class MainState extends ManagedGameState {
     private boolean paused = false;
+    private EditorManager edm = EditorManager.getInstance();
     Zombie ivan;
     Zombie david;
     
@@ -40,9 +45,7 @@ public class MainState extends ManagedGameState {
         
         // Init zombies
         ivan = new Zombie();
-        ivan.setActive(true);
         david = new Zombie();
-        david.setActive(true);
         
         ivan.setPosition(new Vector2f(50, 50));
         david.setPosition(new Vector2f(100, 100));
@@ -53,12 +56,17 @@ public class MainState extends ManagedGameState {
     
     @Override
     public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException {
-        em.render(gc, g);
-
         TileSet test = new TileSet("test", "resources/textures/tileset_test.png", 32);
-        int[][] mapArray = {{1,2,1,2},{3,0,3,0}};
+        int[][] mapArray = {};
+        try {
+            mapArray = edm.readMap("test");
+        } catch (EditorException ex) {
+            Logger.getLogger(MainState.class.getName()).log(Level.SEVERE, null, ex);
+        }
         TileMap map = new TileMap(mapArray, test);
         map.render();
+        
+        em.render(gc, g);
     }
 
     @Override
