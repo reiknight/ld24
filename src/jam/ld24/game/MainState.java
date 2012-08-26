@@ -51,9 +51,8 @@ public class MainState extends ManagedGameState {
     
     @Override
     public void render(GameContainer gc, StateBasedGame game, Graphics g) throws SlickException {
-<<<<<<< HEAD
         em.render(gc, g);
-=======
+
         TileSet test = new TileSet("test", "resources/textures/tileset_test.png", 32);
         test.render(0, 0, 32);
         test.render(1, 32, 32);
@@ -62,7 +61,6 @@ public class MainState extends ManagedGameState {
         
         test.render(0, 0, 128, 2, 1);
         test.render(0, 0, 192, 1, 2);
->>>>>>> Added basic TileSet class
     }
 
     @Override
