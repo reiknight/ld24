@@ -90,12 +90,7 @@ public class Level {
     }
     
     private void loadWalls() {
-        int[][] map = null;
-        try {
-            map = EditorManager.getInstance().readMap(name);
-        } catch (EditorException ex) {
-            Logger.getLogger(Level.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
+        int[][] map = this.cm.getMap();
         
         // Init walls
         for(int i = 0; i < map.length; i++) {

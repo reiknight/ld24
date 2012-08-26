@@ -27,4 +27,8 @@ public class Map {
             return map[x][y];
         }
     }
+    
+    public int[][] getMap() {
+        return map;
+    }
 }
