@@ -14,6 +14,7 @@ public class C {
         MOVE_RIGHT("move_right"),
         MOVE_UP("move_up"),
         MOVE_DOWN("move_down"),
+        BACK("back"),
         CLICK_BUTTON("click_button"),
         CROSSHAIR_MOVED("crosshair_moved");
 
@@ -82,7 +83,8 @@ public class C {
 
     public static enum States {
         START_STATE("start", 0),
-        MAIN_STATE("main", 1);
+        MAIN_STATE("main", 1),
+        CREDITS_STATE("credits", 9);
 
         public String name;
         public int value;

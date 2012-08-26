@@ -39,7 +39,7 @@ public class EditorManager {
      * @param name 
      */
     public void writeMap(String name, int[][] map) throws EditorException {
-        File dir = new File("maps");
+        File dir = new File("resources/maps");
         dir.mkdir();
         System.out.println(dir.getAbsolutePath());
         File f = new File(dir, name+".map");
@@ -73,7 +73,7 @@ public class EditorManager {
     }
     
     public int[][] readMap(String name) throws EditorException {
-        File dir = new File("maps");
+        File dir = new File("resources/maps");
         File f = new File(dir,name+".map");
  
         Scanner sc = null;

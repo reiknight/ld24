@@ -45,9 +45,9 @@ public class MainState extends ManagedGameState {
         evm.addEvent(C.Events.MOVE_UP.name, new InputEvent(InputEvent.KEYBOARD, Input.KEY_W));
         evm.addEvent(C.Events.MOVE_DOWN.name, new InputEvent(InputEvent.KEYBOARD, Input.KEY_S));
                 
-        tm.getInstance().addTexture(C.Textures.ZOMBIE.name, C.Textures.ZOMBIE.path);
-        tm.getInstance().addTexture(C.Textures.AVATAR.name, C.Textures.AVATAR.path);
-        tm.getInstance().addTexture(C.Textures.WALL.name, C.Textures.WALL.path);
+        tm.addTexture(C.Textures.ZOMBIE.name, C.Textures.ZOMBIE.path);
+        tm.addTexture(C.Textures.AVATAR.name, C.Textures.AVATAR.path);
+        tm.addTexture(C.Textures.WALL.name, C.Textures.WALL.path);
         
         // Init zombies
         ivan = new Zombie();
