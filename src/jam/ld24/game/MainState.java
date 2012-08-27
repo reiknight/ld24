@@ -40,7 +40,6 @@ public class MainState extends ManagedGameState {
         //Load textures
         tm.addTexture(C.Textures.ZOMBIE.name, C.Textures.ZOMBIE.path);
         tm.addTexture(C.Textures.ENEMY.name, C.Textures.ENEMY.path);
-        tm.addTexture(C.Textures.WALL.name, C.Textures.WALL.path);
         
         //Load sounds
         sm.addSound(C.Sounds.ZOMBIE_BITE.name, C.Sounds.ZOMBIE_BITE.path);
@@ -76,7 +75,8 @@ public class MainState extends ManagedGameState {
     void restart() {
         lm.clearLevels();
         //lm.addLevel(new Level("level_0"));
-        lm.addLevel(new Level("level_1"));
+        //lm.addLevel(new Level("level_1"));
+        lm.addLevel(new Level("level_2"));
         lm.loadLevel(0);
     }
 }

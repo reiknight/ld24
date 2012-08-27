@@ -14,7 +14,7 @@ public class Wall extends Sprite {
     protected float speed = (Float) C.Logic.ZOMBIE_SPEED.data;
         
     public Wall() {
-        super(C.Textures.WALL.name);
+        super();
         this.name = C.Entities.WALL.name + id++;
         group = C.Groups.WALLS.name;
     }
