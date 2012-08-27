@@ -155,6 +155,12 @@ public class Zombie extends Sprite {
 
     public void setActive(boolean active) {
         this.active = active;
+        if(active) {
+            setTexture(C.Textures.AVATAR.name);
+        }
+        else {
+            setTexture(C.Textures.ZOMBIE.name);
+        }
     }
 
     public int getZombieGroup() {
