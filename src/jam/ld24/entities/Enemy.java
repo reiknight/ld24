@@ -33,7 +33,6 @@ public class Enemy extends Entity {
     protected float speed = (Float) C.Logic.ENEMY_SPEED.data;
     protected int thinkTime = (Integer) C.Logic.ENEMY_THINK_TIME.data;
     private int state = IDLE;
-    private final String name;
     private int frame;
     private TileSet tileSet = new TileSet(C.Textures.TILE_SET.name, 
         (Integer) C.Logic.TILE_SIZE.data);
