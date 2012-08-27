@@ -32,6 +32,6 @@ public class CollisionMap extends Map {
         int j4 = (int) ((x + entity.getWidth()) / tileSize);
         int i4 = (int) ((y + entity.getHeight()) / tileSize);
         
-        return  map[i1][j1] == 1 || map[i2][j2] == 1 || map[i3][j3] == 1 || map[i4][j4] == 1;
+        return  map[i1][j1] != 13 || map[i2][j2] != 13 || map[i3][j3] != 13 || map[i4][j4] != 13;
     }
 }

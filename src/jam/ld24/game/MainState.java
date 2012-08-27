@@ -40,6 +40,7 @@ public class MainState extends ManagedGameState {
         evm.addEvent(C.Events.PREV_ZOMBIE.name, new InputEvent(InputEvent.KEYBOARD, Input.KEY_K, (Integer) C.Logic.SELECT_OPTION_DELAY.data));
                 
         //Load textures
+        tm.addTexture(C.Textures.TILE_SET.name, C.Textures.TILE_SET.path);
         tm.addTexture(C.Textures.ZOMBIE.name, C.Textures.ZOMBIE.path);
         tm.addTexture(C.Textures.AVATAR.name, C.Textures.AVATAR.path);
         tm.addTexture(C.Textures.ENEMY.name, C.Textures.ENEMY.path);

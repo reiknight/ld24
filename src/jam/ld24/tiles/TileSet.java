@@ -11,8 +11,7 @@ public class TileSet {
     private int cols;
     private int rows;
     
-    public TileSet(String name, String path, int tileSize) {
-        TextureManager.getInstance().addTexture(name, path);
+    public TileSet(String name, int tileSize) {
         this.tileSize = tileSize;
         this.setTexture(name);
     }
@@ -39,6 +38,11 @@ public class TileSet {
      * @param y
      */
     public void render(int id, int x, int y) {
+        // Bypass the function to the dimension version with 1x1
+        render(id, x, y, 1, 1);
+    }
+    
+    public void render(int id, float x, float y) {
         // Bypass the function to the dimension version with 1x1
         render(id, x, y, 1, 1);
     }
@@ -71,5 +75,23 @@ public class TileSet {
         
         subImage = this.image.getSubImage(j  * tileSize, i  * tileSize, tileSize * n, tileSize * m);
         subImage.draw(x*tileSize, y*tileSize);
+    }
+    
+     public void render(int id, float x, float y, int n, int m) {
+        int i, j;
+        Image subImage;
+        
+        /**
+         * TileSet ids are represented like this:
+         * 
+         * 0 | 1 | 2
+         * 3 | 4 | 5
+         */
+        
+        i  = id / cols;
+        j = id % cols;
+        
+        subImage = this.image.getSubImage(j  * tileSize, i  * tileSize, tileSize * n, tileSize * m);
+        subImage.draw(x, y);
     }
 }

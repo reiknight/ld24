@@ -8,6 +8,7 @@ import infinitedog.frisky.physics.PhysicsManager;
 import infinitedog.frisky.sounds.SoundManager;
 import jam.ld24.game.C;
 import jam.ld24.tiles.CollisionMap;
+import jam.ld24.tiles.TileSet;
 import java.util.ArrayList;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -15,7 +16,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Line;
 import org.newdawn.slick.geom.Vector2f;
 
-public class Zombie extends Sprite {
+public class Zombie extends Entity {
     private static int id = 0;
     protected float speed = (Float) C.Logic.ZOMBIE_SPEED.data;
     private boolean alive;
@@ -26,14 +27,18 @@ public class Zombie extends Sprite {
     private EntityManager em = EntityManager.getInstance();
     private PhysicsManager pm = PhysicsManager.getInstance();
     private Vector2f direction;
+    private TileSet tileSet = new TileSet(C.Textures.TILE_SET.name, 
+            (Integer) C.Logic.TILE_SIZE.data);
+    private int frame;
         
     public Zombie() {
-        super(C.Textures.ZOMBIE.name);
         name =  C.Entities.ZOMBIE.name + id++;
         group = C.Groups.ZOMBIES.name;
         zombieGroup = 1;
         alive = true;
-        direction = new Vector2f(0, 1);
+        setDirection(new Vector2f(0, 1));
+        setWidth((Integer) C.Logic.TILE_SIZE.data);
+        setHeight((Integer) C.Logic.TILE_SIZE.data);
     }
     
     public Zombie(int x, int y) {
@@ -51,6 +56,7 @@ public class Zombie extends Sprite {
     @Override
     public void render(GameContainer gc, Graphics g) {
         super.render(gc, g);
+        tileSet.render(frame, getX(), getY());
         
         /*g.setColor(Color.red);
         ArrayList<Entity> enemies = em.getEntityGroup(C.Groups.ENEMIES.name);
@@ -81,16 +87,16 @@ public class Zombie extends Sprite {
             // Player movement
             if(evm.isHappening(C.Events.MOVE_LEFT.name, gc)) {
                 vx -= speed * delta;
-                direction = new Vector2f(-1, 0);
+                setDirection(new Vector2f(-1, 0));
             }else if(evm.isHappening(C.Events.MOVE_RIGHT.name, gc)) {
                 vx += speed * delta;
-                direction = new Vector2f(1, 0);
+                setDirection(new Vector2f(1, 0));
             } else if(evm.isHappening(C.Events.MOVE_UP.name, gc)) {
                 vy -= speed * delta;
-                direction = new Vector2f(0, -1);
+                setDirection(new Vector2f(0, -1));
             }else if(evm.isHappening(C.Events.MOVE_DOWN.name, gc)) {
                 vy += speed * delta;
-                direction = new Vector2f(0, 1);
+                setDirection(new Vector2f(0, 1));
             }
             
             // Check if any enemy see you
@@ -98,24 +104,26 @@ public class Zombie extends Sprite {
             ArrayList<Entity> walls = em.getEntityGroup(C.Groups.WALLS.name);
             Vector2f playerCenter = this.getCenter();
             
-            for(int i = 0; i < enemies.size(); i++) {
-                Enemy enemy = (Enemy) enemies.get(i);
-                Vector2f enemyCenter = enemy.getCenter();
-                Line l = new Line(enemyCenter, playerCenter);
-                boolean blockedByWall = false;
-                
-                for(int j = 0; j < walls.size(); j++) {
-                    Wall wall = (Wall) walls.get(j);
-                    if(pm.testCollisionPolygon(wall, l)) {
-                        blockedByWall = true;
-                        break;
+            if(!C.GOD_MODE) {
+                for(int i = 0; i < enemies.size(); i++) {
+                    Enemy enemy = (Enemy) enemies.get(i);
+                    Vector2f enemyCenter = enemy.getCenter();
+                    Line l = new Line(enemyCenter, playerCenter);
+                    boolean blockedByWall = false;
+
+                    for(int j = 0; j < walls.size(); j++) {
+                        Wall wall = (Wall) walls.get(j);
+                        if(pm.testCollisionPolygon(wall, l)) {
+                            blockedByWall = true;
+                            break;
+                        }
                     }
-                }
-            
-                if(!blockedByWall) {
-                    if(pm.testCollisionPolygon(this, enemy.getVision())) {
-                        setAlive(false);
-                        return;
+
+                    if(!blockedByWall) {
+                        if(pm.testCollisionPolygon(this, enemy.getVision())) {
+                            setAlive(false);
+                            return;
+                        }
                     }
                 }
             }
@@ -200,12 +208,12 @@ public class Zombie extends Sprite {
 
     public void setActive(boolean active) {
         this.active = active;
-        if(active) {
+        /*if(active) {
             setTexture(C.Textures.AVATAR.name);
         }
         else {
             setTexture(C.Textures.ZOMBIE.name);
-        }
+        }*/
     }
 
     public int getZombieGroup() {
@@ -226,5 +234,11 @@ public class Zombie extends Sprite {
     
     public void setDirection(Vector2f direction) {
         this.direction = direction;
+        if(direction.x == 0) {
+            if(direction.y == 1) frame = 36; else frame = 34;
+        }
+        else {
+            if(direction.x == 1) frame = 35; else frame = 33;
+        }
     }
 }
