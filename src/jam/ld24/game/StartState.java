@@ -17,7 +17,7 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 
 public class StartState extends ManagedGameState {
     private Image background;
-    private Button button_start, button_instructions, button_credits;
+    private Button button_start, button_instructions;
     
     private boolean start_game = false;
     
@@ -44,6 +44,12 @@ public class StartState extends ManagedGameState {
                 C.Buttons.START_GAME.label, C.Buttons.START_GAME.labelPosition);
         button_start.setPosition(C.Buttons.START_GAME.position);
         em.addEntity(button_start.getName(), button_start);
+        button_instructions = new Button(C.Buttons.INSTRUCTIONS.textureName,
+                "button_instructions", C.Groups.BUTTONS.name,
+                C.Buttons.INSTRUCTIONS.label, C.Buttons.INSTRUCTIONS.labelPosition);
+        button_instructions.setPosition(C.Buttons.INSTRUCTIONS.position);
+        em.addEntity(button_instructions.getName(), button_instructions);
+        
         
         //Add Crosshair
         em.addEntity(C.Entities.CROSSHAIR.name, new CrossHair());
@@ -72,6 +78,9 @@ public class StartState extends ManagedGameState {
             if(pm.testCollisionsEntity(crosshair, button_start)) {
                 ((MainState)game.getState(C.States.MAIN_STATE.value)).restart();
                 game.enterState(C.States.MAIN_STATE.value, new FadeOutTransition(), new FadeInTransition());
+            }
+            else if(pm.testCollisionsEntity(crosshair, button_instructions)) {
+                game.enterState(C.States.INSTRUCTIONS_STATE.value, new FadeOutTransition(), new FadeInTransition());
             }
         }
         if(evm.isHappening(C.Events.CLOSE_WINDOW.name, gc)) {

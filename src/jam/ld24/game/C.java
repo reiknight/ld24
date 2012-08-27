@@ -90,6 +90,7 @@ public class C {
         START_STATE("start", 0),
         MAIN_STATE("main", 1),
         PUBLISHER_STATE("publisher", 2),
+        INSTRUCTIONS_STATE("instructions", 3),
         CREDITS_STATE("credits", 9);
 
         public String name;
@@ -115,7 +116,8 @@ public class C {
     }
 
      public static enum Buttons {
-        START_GAME(Textures.BUTTON.name, "Start", new Vector2f(600, 175), new Vector2f(45, 25));
+        START_GAME(Textures.BUTTON.name, "Start", new Vector2f(600, 175), new Vector2f(45, 25)),
+        INSTRUCTIONS(Textures.BUTTON.name, "Instructions", new Vector2f(600, 275), new Vector2f(45, 25));
 
         public String textureName;
         public String label;
