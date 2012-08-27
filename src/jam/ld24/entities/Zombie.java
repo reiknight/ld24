@@ -5,6 +5,7 @@ import infinitedog.frisky.entities.EntityManager;
 import infinitedog.frisky.entities.Sprite;
 import infinitedog.frisky.events.EventManager;
 import infinitedog.frisky.physics.PhysicsManager;
+import infinitedog.frisky.sounds.SoundManager;
 import jam.ld24.game.C;
 import jam.ld24.tiles.CollisionMap;
 import java.util.ArrayList;
@@ -51,6 +52,7 @@ public class Zombie extends Sprite {
         super.update(gc, delta);
         
         EventManager evm = EventManager.getInstance();
+        SoundManager sm = SoundManager.getInstance();
         float x = getX();
         float y = getY();
         float oldX = x;
@@ -81,6 +83,8 @@ public class Zombie extends Sprite {
                         zombie.setCollisionMap(this.cm);
                         em.addFutureEntity(zombie.name,zombie);
                         em.removeEntity(enemy.getName());
+                        
+                        sm.playSound(C.Sounds.ZOMBIE_BITE.name);
                     }
                 }
             }
