@@ -234,11 +234,21 @@ public class Zombie extends Entity {
     
     public void setDirection(Vector2f direction) {
         this.direction = direction;
-        if(direction.x == 0) {
-            if(direction.y == 1) frame = 36; else frame = 34;
+        if(isActive()) {
+            if(direction.x == 0) {
+                if(direction.y == 1) frame = 36; else frame = 34;
+            }
+            else {
+                if(direction.x == 1) frame = 35; else frame = 33;
+            }
         }
         else {
-            if(direction.x == 1) frame = 35; else frame = 33;
+            if(direction.x == 0) {
+                if(direction.y == 1) frame = 32; else frame = 30;
+            }
+            else {
+                if(direction.x == 1) frame = 31; else frame = 29;
+            }            
         }
     }
 }
