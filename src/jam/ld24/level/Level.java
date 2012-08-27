@@ -34,25 +34,13 @@ public class Level {
     private EntityManager em = EntityManager.getInstance();
     private boolean cleared = false;
     
+    private int levelTime;
+    
     private int elapsedTime = 0;
 
     public Level(String name) {
-        TileSet ts = new TileSet(C.Textures.TILE_SET.name, C.Textures.TILE_SET.path, 
-                (Integer)C.Logic.TILE_SIZE.data);
-        
-        int[][] map = null;
-        try {
-            map = EditorManager.getInstance().readMap(name);
-        } catch (EditorException ex) {
-            Logger.getLogger(Level.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        
         this.name = name;
-        this.tm = new TileMap(map, ts);
-        this.cm = new CollisionMap(map);
-        
-        readEntities();
-        loadWalls();
+        restart();
     }
     
     private void readEntities() {
@@ -118,25 +106,46 @@ public class Level {
         tm.render();
         // Render all entities
         em.render(gc, g);
+              
+        g.setColor(Color.white);
+        g.drawString("Time: " + levelTime / 1000, 700, 10);
         
         if(elapsedTime > 0) {
-            g.setColor(Color.white);
-            g.drawString("Stage cleared!", 275, 225);
+            if(cleared) {
+                g.drawString("Stage cleared!", 275, 225);
+            }
+            else {
+                g.drawString("You are...dead?", 275, 225);
+            }
         }
     }
 
     public void update(GameContainer gc, int delta) {
         em.setGameState(this.name);
-        // Update all entities
-        em.update(gc, delta);
         
+        if(elapsedTime <= 0) {
+            // Update all entities
+            em.update(gc, delta);
+        }
+
         // Check victory/defeat conditions
         ArrayList<Entity> enemies = em.getEntityGroup(C.Groups.ENEMIES.name);
+        
         if(enemies.isEmpty()) {
             elapsedTime += delta;
             if(elapsedTime > (Integer) C.Logic.NEXT_LEVEL_TIME.data) {
                 cleared = true;
             }
+        }
+        
+        if(levelTime <= 0) {
+            elapsedTime += delta;
+            if(elapsedTime > (Integer) C.Logic.NEXT_LEVEL_TIME.data) {
+                restart();
+            }
+        }
+        else {                    
+            levelTime -= delta;
         }
         
     }
@@ -148,6 +157,29 @@ public class Level {
     void clear() {
         em.setGameState(this.name);
         em.clear();
+    }
+
+    private void restart() {
+        clear();
+        TileSet ts = new TileSet(C.Textures.TILE_SET.name, C.Textures.TILE_SET.path, 
+                (Integer)C.Logic.TILE_SIZE.data);
+        
+        int[][] map = null;
+        try {
+            map = EditorManager.getInstance().readMap(name);
+        } catch (EditorException ex) {
+            Logger.getLogger(Level.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        
+        this.tm = new TileMap(map, ts);
+        this.cm = new CollisionMap(map);
+        
+        readEntities();
+        loadWalls();
+        
+        elapsedTime = 0;
+        // TODO: load time from file?
+        levelTime = 60000;
     }
 
 }
