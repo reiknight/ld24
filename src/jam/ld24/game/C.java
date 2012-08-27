@@ -34,6 +34,7 @@ public class C {
         CROSSHAIR("crosshair", "resources/textures/crosshair.png"),
         WALL("wall", "resources/textures/wall.png"),
         TILE_SET("tile_set", "resources/textures/tile_set.png"),
+        LOGO("logo", "resources/textures/logo.png"),
         ENEMY("enemy", "resources/textures/enemy.png");
 
         public String name;
@@ -88,6 +89,7 @@ public class C {
     public static enum States {
         START_STATE("start", 0),
         MAIN_STATE("main", 1),
+        PUBLISHER_STATE("publisher", 2),
         CREDITS_STATE("credits", 9);
 
         public String name;
@@ -102,6 +104,7 @@ public class C {
      public static enum Logic {
         ZOMBIE_SPEED((float)0.25),
         SELECT_OPTION_DELAY(500),
+        PUBLISHER_TIME(2000),
         TILE_SIZE(32);
 
         public Object data;

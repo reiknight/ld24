@@ -9,11 +9,12 @@ public class Zombie0World extends StateBasedGame {
     
     public Zombie0World() {
         super("Zombie0's World - v1.0");
+        this.addState(new PublisherState(C.States.PUBLISHER_STATE.value));
         this.addState(new StartState(C.States.START_STATE.value));
         this.addState(new MainState(C.States.MAIN_STATE.value));
         this.addState(new CreditsState(C.States.CREDITS_STATE.value));
         
-        this.enterState(C.States.START_STATE.value);
+        this.enterState(C.States.PUBLISHER_STATE.value);
     }
     
     public static void main(String[] args) throws SlickException 
@@ -27,6 +28,7 @@ public class Zombie0World extends StateBasedGame {
 
     @Override
     public void initStatesList(GameContainer gc) throws SlickException {
+        this.getState(C.States.PUBLISHER_STATE.value).init(gc, this);
         this.getState(C.States.START_STATE.value).init(gc, this);
         //this.getState(C.States.MAIN_STATE.value).init(gc, this);
         this.getState(C.States.CREDITS_STATE.value).init(gc, this);
