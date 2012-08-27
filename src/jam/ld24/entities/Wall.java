@@ -16,6 +16,7 @@ public class Wall extends Sprite {
     public Wall() {
         super(C.Textures.WALL.name);
         this.name = C.Entities.WALL.name + id++;
+        group = C.Groups.WALLS.name;
     }
     
     @Override

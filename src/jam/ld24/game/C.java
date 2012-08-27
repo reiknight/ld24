@@ -16,7 +16,8 @@ public class C {
         MOVE_DOWN("move_down"),
         BACK("back"),
         CLICK_BUTTON("click_button"),
-        CROSSHAIR_MOVED("crosshair_moved");
+        CROSSHAIR_MOVED("crosshair_moved"),
+        ACTION("action");
 
         public String name;
 
@@ -62,7 +63,8 @@ public class C {
         BULLETS("bullets"),
         ZOMBIES("zombies"),
         BUTTONS("buttons"),
-        ENEMIES("enemies");
+        ENEMIES("enemies"),
+        WALLS("walls");
 
         public String name;
 

@@ -41,5 +41,9 @@ public class Enemy extends Sprite {
     public void setActive(boolean active) {
         this.active = active;
     }
+
+    void die() {
+        setAlive(false);
+    }
     
 }

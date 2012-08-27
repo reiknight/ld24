@@ -1,9 +1,13 @@
 package jam.ld24.entities;
 
+import infinitedog.frisky.entities.Entity;
+import infinitedog.frisky.entities.EntityManager;
 import infinitedog.frisky.entities.Sprite;
 import infinitedog.frisky.events.EventManager;
+import infinitedog.frisky.physics.PhysicsManager;
 import jam.ld24.game.C;
 import jam.ld24.tiles.CollisionMap;
+import java.util.ArrayList;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Vector2f;
@@ -15,6 +19,8 @@ public class Zombie extends Sprite {
     private boolean active;
     private int zombieGroup;
     private CollisionMap cm;
+    private EntityManager em = EntityManager.getInstance();
+    private PhysicsManager pm = PhysicsManager.getInstance();
         
     public Zombie() {
         super(C.Textures.ZOMBIE.name);
@@ -27,6 +33,12 @@ public class Zombie extends Sprite {
         this();
         this.setPosition(new Vector2f(x * (Integer) C.Logic.TILE_SIZE.data,
                 y * (Integer) C.Logic.TILE_SIZE.data));
+    }
+    
+     public Zombie(Enemy enemy) {
+        this();
+        this.setPosition(new Vector2f(enemy.getX(), enemy.getY()));
+        enemy.die();
     }
         
     @Override
@@ -46,15 +58,32 @@ public class Zombie extends Sprite {
         float vx = 0;
         float vy = 0;
     
-        //Player movement
-        if(evm.isHappening(C.Events.MOVE_LEFT.name, gc) && isActive()) {
-            vx -= speed * delta;
-        }else if(evm.isHappening(C.Events.MOVE_RIGHT.name, gc) && isActive()) {
-            vx += speed * delta;
-        } else if(evm.isHappening(C.Events.MOVE_UP.name, gc) && isActive()) {
-            vy -= speed * delta;
-        }else if(evm.isHappening(C.Events.MOVE_DOWN.name, gc) && isActive()) {
-            vy += speed * delta;
+        // We are controlling the zombie
+        if(isActive()) {
+            // Player movement
+            if(evm.isHappening(C.Events.MOVE_LEFT.name, gc)) {
+                vx -= speed * delta;
+            }else if(evm.isHappening(C.Events.MOVE_RIGHT.name, gc)) {
+                vx += speed * delta;
+            } else if(evm.isHappening(C.Events.MOVE_UP.name, gc)) {
+                vy -= speed * delta;
+            }else if(evm.isHappening(C.Events.MOVE_DOWN.name, gc)) {
+                vy += speed * delta;
+            }
+            
+            // Player action
+            if(evm.isHappening(C.Events.ACTION.name, gc)) {
+                ArrayList<Entity> enemies = em.getEntityGroup(C.Groups.ENEMIES.name);
+                for(int i = 0; i < enemies.size(); i++) {
+                    Enemy enemy = (Enemy) enemies.get(i);
+                    if(pm.testCollisionsEntity(this, enemy)) {
+                        Zombie zombie = new Zombie(enemy);
+                        zombie.setCollisionMap(this.cm);
+                        em.addFutureEntity(zombie.name,zombie);
+                        em.removeEntity(enemy.getName());
+                    }
+                }
+            }
         }
         
         x += vx;

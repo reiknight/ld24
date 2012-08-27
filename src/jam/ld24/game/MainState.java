@@ -33,6 +33,7 @@ public class MainState extends ManagedGameState {
         evm.addEvent(C.Events.MOVE_RIGHT.name, new InputEvent(InputEvent.KEYBOARD, Input.KEY_D));
         evm.addEvent(C.Events.MOVE_UP.name, new InputEvent(InputEvent.KEYBOARD, Input.KEY_W));
         evm.addEvent(C.Events.MOVE_DOWN.name, new InputEvent(InputEvent.KEYBOARD, Input.KEY_S));
+        evm.addEvent(C.Events.ACTION.name, new InputEvent(InputEvent.KEYBOARD, Input.KEY_SPACE));
                 
         tm.addTexture(C.Textures.ZOMBIE.name, C.Textures.ZOMBIE.path);
         tm.addTexture(C.Textures.ENEMY.name, C.Textures.ENEMY.path);
