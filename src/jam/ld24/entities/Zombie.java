@@ -75,6 +75,9 @@ public class Zombie extends Sprite {
             
             // Player action
             if(evm.isHappening(C.Events.ACTION.name, gc)) {
+                boolean human_bitten = false;
+                
+                // Bite
                 ArrayList<Entity> enemies = em.getEntityGroup(C.Groups.ENEMIES.name);
                 for(int i = 0; i < enemies.size(); i++) {
                     Enemy enemy = (Enemy) enemies.get(i);
@@ -85,7 +88,13 @@ public class Zombie extends Sprite {
                         em.removeEntity(enemy.getName());
                         
                         sm.playSound(C.Sounds.ZOMBIE_BITE.name);
+                        human_bitten = true;
                     }
+                }
+                
+                if(!human_bitten) {
+                    // Growl
+                    sm.playSound(C.Sounds.ZOMBIE_GROWL.name);
                 }
             }
         }

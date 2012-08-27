@@ -32,7 +32,10 @@ public class Level {
     private CollisionMap cm;
     
     private EntityManager em = EntityManager.getInstance();
+    private ArrayList<Wall> walls = new ArrayList<Wall>();
+    
     private boolean cleared = false;
+    private boolean dead = false;
     
     private int levelTime;
     
@@ -94,7 +97,7 @@ public class Level {
                     Wall wall = new Wall();
                     wall.setPosition(new Vector2f(j * (Integer) C.Logic.TILE_SIZE.data, 
                             i * (Integer) C.Logic.TILE_SIZE.data));
-                    em.addEntity(wall.getName(), wall);
+                    walls.add(wall);
                 }
             }
         }
@@ -106,12 +109,17 @@ public class Level {
         tm.render();
         // Render all entities
         em.render(gc, g);
+        
+        // Render walls
+        for(int i = 0, l = walls.size(); i < l; i++) {
+            walls.get(i).render(gc, g);
+        }
               
         g.setColor(Color.white);
         g.drawString("Time: " + levelTime / 1000, 700, 10);
         
         if(elapsedTime > 0) {
-            if(cleared) {
+            if(!dead) {
                 g.drawString("Stage cleared!", 275, 225);
             }
             else {
@@ -139,6 +147,7 @@ public class Level {
         }
         
         if(levelTime <= 0) {
+            dead = true;
             elapsedTime += delta;
             if(elapsedTime > (Integer) C.Logic.NEXT_LEVEL_TIME.data) {
                 restart();
@@ -177,6 +186,9 @@ public class Level {
         readEntities();
         loadWalls();
         
+        cleared = false;
+        dead = false;
+               
         elapsedTime = 0;
         // TODO: load time from file?
         levelTime = 60000;

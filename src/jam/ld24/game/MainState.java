@@ -35,7 +35,7 @@ public class MainState extends ManagedGameState {
         evm.addEvent(C.Events.MOVE_RIGHT.name, new InputEvent(InputEvent.KEYBOARD, Input.KEY_D));
         evm.addEvent(C.Events.MOVE_UP.name, new InputEvent(InputEvent.KEYBOARD, Input.KEY_W));
         evm.addEvent(C.Events.MOVE_DOWN.name, new InputEvent(InputEvent.KEYBOARD, Input.KEY_S));
-        evm.addEvent(C.Events.ACTION.name, new InputEvent(InputEvent.KEYBOARD, Input.KEY_SPACE));
+        evm.addEvent(C.Events.ACTION.name, new InputEvent(InputEvent.KEYBOARD, Input.KEY_SPACE, (Integer) C.Logic.SELECT_OPTION_DELAY.data));
                 
         //Load textures
         tm.addTexture(C.Textures.ZOMBIE.name, C.Textures.ZOMBIE.path);
@@ -44,6 +44,7 @@ public class MainState extends ManagedGameState {
         
         //Load sounds
         sm.addSound(C.Sounds.ZOMBIE_BITE.name, C.Sounds.ZOMBIE_BITE.path);
+        sm.addSound(C.Sounds.ZOMBIE_GROWL.name, C.Sounds.ZOMBIE_GROWL.path);
         
         restart();
     }
@@ -56,6 +57,7 @@ public class MainState extends ManagedGameState {
     @Override
     public void update(GameContainer gc, StateBasedGame game, int delta) throws SlickException {
         em.setGameState(C.States.MAIN_STATE.name);
+        evm.update(gc, delta);
         
         if(lm.isCleared()) {
             if(!lm.loadNextLevel()) {
