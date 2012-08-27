@@ -107,10 +107,12 @@ public class C {
     }
 
      public static enum Logic {
-        ZOMBIE_SPEED((float)0.25),
+        ZOMBIE_SPEED((float)0.15),
+        ENEMY_SPEED((float)0.25),
         SELECT_OPTION_DELAY(500),
         PUBLISHER_TIME(2000),
         NEXT_LEVEL_TIME(1500),
+        ENEMY_THINK_TIME(1000),
         TILE_SIZE(32);
 
         public Object data;

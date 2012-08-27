@@ -79,6 +79,7 @@ public class Level {
                 }
                 else {
                     Enemy enemy = new Enemy(x, y);
+                    enemy.setCollisionMap(this.cm);
                     em.addEntity(enemy.getName(), enemy);
                 }
             }
