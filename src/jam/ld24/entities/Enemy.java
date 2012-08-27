@@ -20,13 +20,14 @@ public class Enemy extends Sprite {
     private boolean alive;
     private boolean active;
     private final Vector2f direction;
+    private Polygon vision = new Polygon();
 
     public Enemy() {
         super(C.Textures.ENEMY.name);
         name =  C.Entities.ENEMY.name + id++;
         group = C.Groups.ENEMIES.name;
         alive = true;
-        direction = new Vector2f(1, 0);
+        direction = new Vector2f(0, 1);
     }
     
     public Enemy(int x, int y) {
@@ -57,17 +58,8 @@ public class Enemy extends Sprite {
  
     @Override
     public void render(GameContainer gc, Graphics g) {
-        float posx = getCenter().x;
-        float posy = getCenter().y;
-        
         g.setColor(Color.yellow);
         //g.drawString(name, posx, posy);
-        Polygon vision = new Polygon();
-        vision.addPoint(posx, posy);
-        if(direction.y == 0) {
-            vision.addPoint(posx + 100 * direction.x, posy - 75);
-            vision.addPoint(posx + 100 * direction.x, posy + 75);
-        }
         g.draw(vision);
         
         super.render(gc, g);
@@ -76,5 +68,26 @@ public class Enemy extends Sprite {
     @Override
     public void update(GameContainer gc, int delta) {
         super.update(gc, delta);
+    }
+    
+    public void setPosition(Vector2f position) {
+        super.setPosition(position);
+        
+        //Update vision
+        float posx = getCenter().x;
+        float posy = getCenter().y;
+        vision.addPoint(posx, posy);
+        if(direction.y == 0) {
+            vision.addPoint(posx + 100 * direction.x, posy - 75);
+            vision.addPoint(posx + 100 * direction.x, posy + 75);
+        }
+        else {
+            vision.addPoint(posx + 75, posy + 100 * direction.y);
+            vision.addPoint(posx - 75, posy + 100 * direction.y);
+        }
+    }
+    
+    public Polygon getVision() {
+        return vision;
     }
 }

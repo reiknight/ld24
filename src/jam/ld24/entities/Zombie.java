@@ -18,6 +18,7 @@ public class Zombie extends Sprite {
     protected float speed = (Float) C.Logic.ZOMBIE_SPEED.data;
     private boolean alive;
     private boolean active;
+    private boolean dead;
     private int zombieGroup;
     private CollisionMap cm;
     private EntityManager em = EntityManager.getInstance();
@@ -28,6 +29,7 @@ public class Zombie extends Sprite {
         name =  C.Entities.ZOMBIE.name + id++;
         group = C.Groups.ZOMBIES.name;
         zombieGroup = 1;
+        alive = true;
     }
     
     public Zombie(int x, int y) {
@@ -73,12 +75,19 @@ public class Zombie extends Sprite {
                 vy += speed * delta;
             }
             
+            ArrayList<Entity> enemies = em.getEntityGroup(C.Groups.ENEMIES.name);
+            for(int i = 0; i < enemies.size(); i++) {
+                if(pm.testCollisionPolygon(this, ((Enemy)enemies.get(i)).getVision())) {
+                    setAlive(false);
+                    return;
+                }
+            }
+            
             // Player action
             if(evm.isHappening(C.Events.ACTION.name, gc)) {
                 boolean human_bitten = false;
                 
                 // Bite
-                ArrayList<Entity> enemies = em.getEntityGroup(C.Groups.ENEMIES.name);
                 for(int i = 0; i < enemies.size(); i++) {
                     Enemy enemy = (Enemy) enemies.get(i);
                     if(pm.testCollisionsEntity(this, enemy)) {

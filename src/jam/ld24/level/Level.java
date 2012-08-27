@@ -146,7 +146,15 @@ public class Level {
             }
         }
         
-        if(levelTime <= 0) {
+        ArrayList<Entity> zombies = em.getEntityGroup(C.Groups.ZOMBIES.name);
+        for(int i = 0, l = zombies.size(); i < l; i ++) {
+            Zombie zombie = (Zombie) zombies.get(i);
+            if(zombie.isActive() && !zombie.isAlive()) {
+                dead = true;
+            }
+        }
+        
+        if(dead || levelTime <= 0) {
             dead = true;
             elapsedTime += delta;
             if(elapsedTime > (Integer) C.Logic.NEXT_LEVEL_TIME.data) {
