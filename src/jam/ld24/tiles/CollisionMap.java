@@ -15,9 +15,9 @@ public class CollisionMap extends Map {
         super(map);
     }
     
-    public boolean collidesWith(Entity entity) {
-        float x = entity.getX();
-        float y = entity.getY();
+    public boolean collidesWith(Entity entity, float vx, float vy) {
+        float x = entity.getX() + vx;
+        float y = entity.getY() + vy;
         
         // Check quad's top left
         int j1 = (int) (x / tileSize);

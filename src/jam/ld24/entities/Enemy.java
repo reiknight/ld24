@@ -19,8 +19,8 @@ public class Enemy extends Sprite {
     private static int id = 0;
     private boolean alive;
     private boolean active;
-    private final Vector2f direction;
     private Polygon vision = new Polygon();
+    private final Vector2f direction;
 
     public Enemy() {
         super(C.Textures.ENEMY.name);

@@ -23,6 +23,7 @@ public class Zombie extends Sprite {
     private CollisionMap cm;
     private EntityManager em = EntityManager.getInstance();
     private PhysicsManager pm = PhysicsManager.getInstance();
+    private Vector2f direction;
         
     public Zombie() {
         super(C.Textures.ZOMBIE.name);
@@ -30,6 +31,7 @@ public class Zombie extends Sprite {
         group = C.Groups.ZOMBIES.name;
         zombieGroup = 1;
         alive = true;
+        direction = new Vector2f(0, 1);
     }
     
     public Zombie(int x, int y) {
@@ -67,12 +69,16 @@ public class Zombie extends Sprite {
             // Player movement
             if(evm.isHappening(C.Events.MOVE_LEFT.name, gc)) {
                 vx -= speed * delta;
+                direction = new Vector2f(-1, 0);
             }else if(evm.isHappening(C.Events.MOVE_RIGHT.name, gc)) {
                 vx += speed * delta;
+                direction = new Vector2f(1, 0);
             } else if(evm.isHappening(C.Events.MOVE_UP.name, gc)) {
                 vy -= speed * delta;
+                direction = new Vector2f(0, -1);
             }else if(evm.isHappening(C.Events.MOVE_DOWN.name, gc)) {
                 vy += speed * delta;
+                direction = new Vector2f(0, 1);
             }
             
             ArrayList<Entity> enemies = em.getEntityGroup(C.Groups.ENEMIES.name);
@@ -106,17 +112,33 @@ public class Zombie extends Sprite {
                     sm.playSound(C.Sounds.ZOMBIE_GROWL.name);
                 }
             }
+
+            if(!this.cm.collidesWith(this, vx, vy)) {
+                x += vx;
+                y += vy;
+            }
+
+            setPosition(new Vector2f(x, y));
         }
-        
-        x += vx;
-        y += vy;
-        
-        if(this.cm.collidesWith(this)) {
-            x -= 10 * vx * delta;
-            y -= 10 * vy * delta;
+        else {
+            ArrayList<Entity> zombies = em.getEntityGroup(C.Groups.ZOMBIES.name);
+            for(int i = 0, l = zombies.size(); i < l; i++) {
+                Zombie zombie = (Zombie) zombies.get(i);
+                if(zombie.isActive()) {
+                    Vector2f zombiePosition = new Vector2f(zombie.getX(), zombie.getY());
+                    Vector2f zombieDirection = zombie.getDirection();
+                    if(zombieDirection.y == 0) { // looking right or left
+                        zombiePosition.x -= zombieDirection.x * 32;
+                    }
+                    else { // looking up or down
+                        zombiePosition.y -= zombieDirection.y * 32;
+                    }
+                    this.setPosition(zombiePosition);
+                    return;
+                }
+            }
         }
-        
-        setPosition(new Vector2f(x, y));
+
     }
 
     public boolean isAlive() {
@@ -145,5 +167,9 @@ public class Zombie extends Sprite {
 
     public void setCollisionMap(CollisionMap collisionMap) {
         this.cm = collisionMap;
+    }
+    
+    public Vector2f getDirection() {
+        return direction;
     }
 }
