@@ -15,6 +15,7 @@ public class Wall extends Entity {
     protected float speed = (Float) C.Logic.ZOMBIE_SPEED.data;
         
     public Wall() {
+        super();
         this.name = C.Entities.WALL.name + id++;
         this.group = C.Groups.WALLS.name;
         setWidth((Integer)C.Logic.TILE_SIZE.data);

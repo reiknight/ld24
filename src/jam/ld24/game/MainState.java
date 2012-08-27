@@ -79,7 +79,8 @@ public class MainState extends ManagedGameState {
     void restart() {
         lm.clearLevels();
         //lm.addLevel(new Level("level_0"));
-        lm.addLevel(new Level("level_1"));
+        //lm.addLevel(new Level("level_1"));
+        lm.addLevel(new Level("level_2"));
         lm.loadLevel(0);
     }
 }
