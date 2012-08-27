@@ -1,5 +1,6 @@
 package jam.ld24.level;
 
+import infinitedog.frisky.entities.Entity;
 import infinitedog.frisky.entities.EntityManager;
 import jam.ld24.entities.Enemy;
 import jam.ld24.entities.Wall;
@@ -12,6 +13,7 @@ import jam.ld24.tiles.TileMap;
 import jam.ld24.tiles.TileSet;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.logging.Logger;
 import org.newdawn.slick.GameContainer;
@@ -29,6 +31,7 @@ public class Level {
     private CollisionMap cm;
     
     private EntityManager em = EntityManager.getInstance();
+    private boolean cleared = false;
 
     public Level(String name) {
         TileSet ts = new TileSet(C.Textures.TILE_SET.name, C.Textures.TILE_SET.path, 
@@ -118,6 +121,17 @@ public class Level {
         em.setGameState(this.name);
         // Update all entities
         em.update(gc, delta);
+        
+        // Check victory/defeat conditions
+        ArrayList<Entity> enemies = em.getEntityGroup(C.Groups.ENEMIES.name);
+        if(enemies.isEmpty()) {
+            cleared = true;
+        }
+        
+    }
+
+    public boolean isCleared() {
+        return cleared;
     }
 
 }

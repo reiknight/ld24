@@ -10,6 +10,8 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.state.transition.FadeInTransition;
+import org.newdawn.slick.state.transition.FadeOutTransition;
 
 public class MainState extends ManagedGameState {
     private boolean paused = false;
@@ -41,7 +43,7 @@ public class MainState extends ManagedGameState {
         
         lm.addLevel(new Level("level_0"));
         lm.addLevel(new Level("level_1"));
-        lm.loadLevel(1);
+        lm.loadLevel(0);
     }
     
     @Override
@@ -52,7 +54,15 @@ public class MainState extends ManagedGameState {
     @Override
     public void update(GameContainer gc, StateBasedGame game, int delta) throws SlickException {
         em.setGameState(C.States.MAIN_STATE.name);
-        lm.update(gc, delta);
+        
+        if(lm.isCleared()) {
+            if(!lm.loadNextLevel()) {
+                game.enterState(C.States.START_STATE.value, new FadeOutTransition(), new FadeInTransition());
+            }
+        }
+        else {
+            lm.update(gc, delta);
+        }
         
         if(evm.isHappening(C.Events.CLOSE_WINDOW.name, gc)) {
             gc.exit();

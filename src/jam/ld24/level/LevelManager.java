@@ -35,15 +35,24 @@ public class LevelManager {
         loadedLevel = id;
     }
     
-    public void loadNextLevel() {
+    public boolean loadNextLevel() {
         loadedLevel++;
+        return loadedLevel < levels.size();
     }
     
     public void render(GameContainer gc, Graphics g) {
-        levels.get(loadedLevel).render(gc, g);
+        if(loadedLevel < levels.size()) {
+            levels.get(loadedLevel).render(gc, g);
+        }
     }
 
     public void update(GameContainer gc, int delta) {
-        levels.get(loadedLevel).update(gc, delta);
+        if(loadedLevel < levels.size()) {
+            levels.get(loadedLevel).update(gc, delta);
+        }
+    }
+    
+    public boolean isCleared() {
+        return levels.get(loadedLevel).isCleared();
     }
 }
