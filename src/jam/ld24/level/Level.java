@@ -116,10 +116,10 @@ public class Level {
         
         if(elapsedTime > 0) {
             if(!dead) {
-                g.drawString("Stage cleared!", 275, 225);
+                g.drawString("Stage cleared!", 300, 550);
             }
             else {
-                g.drawString("You are...dead?", 275, 225);
+                g.drawString("You are...dead?", 300, 550);
             }
         }
     }

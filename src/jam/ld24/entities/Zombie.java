@@ -180,10 +180,10 @@ public class Zombie extends Entity {
                     Vector2f zombiePosition = new Vector2f(zombie.getX(), zombie.getY());
                     Vector2f zombieDirection = zombie.getDirection();
                     if(zombieDirection.y == 0) { // looking right or left
-                        zombiePosition.x -= zombieDirection.x * 32;
+                        zombiePosition.x -= zombieDirection.x * (zombies.indexOf(this) + 1) * 32;
                     }
                     else { // looking up or down
-                        zombiePosition.y -= zombieDirection.y * 32;
+                        zombiePosition.y -= zombieDirection.y * (zombies.indexOf(this) + 1) * 32;
                     }
                     this.setPosition(zombiePosition);
                     this.setDirection(zombieDirection);
