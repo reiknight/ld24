@@ -63,6 +63,7 @@ public class Zombie extends Sprite {
         float oldY = y;
         float vx = 0;
         float vy = 0;
+        ArrayList<Entity> zombies = em.getEntityGroup(C.Groups.ZOMBIES.name);
     
         // We are controlling the zombie
         if(isActive()) {
@@ -112,6 +113,15 @@ public class Zombie extends Sprite {
                     sm.playSound(C.Sounds.ZOMBIE_GROWL.name);
                 }
             }
+            
+            // Next and previous zombie
+            int zombieSelected = -1;
+            if(evm.isHappening(C.Events.NEXT_ZOMBIE.name, gc)) {
+                zombieSelected = (zombies.indexOf(this) + 1) % zombies.size();
+            }
+            if(evm.isHappening(C.Events.PREV_ZOMBIE.name, gc)) {
+                zombieSelected = (zombies.indexOf(this) - 1) % zombies.size();
+            }
 
             if(!this.cm.collidesWith(this, vx, vy)) {
                 x += vx;
@@ -119,9 +129,13 @@ public class Zombie extends Sprite {
             }
 
             setPosition(new Vector2f(x, y));
+            
+            if(zombieSelected != -1) {
+                ((Zombie)zombies.get(zombieSelected)).setActive(true);
+                setActive(false);
+            }
         }
         else {
-            ArrayList<Entity> zombies = em.getEntityGroup(C.Groups.ZOMBIES.name);
             for(int i = 0, l = zombies.size(); i < l; i++) {
                 Zombie zombie = (Zombie) zombies.get(i);
                 if(zombie.isActive()) {
@@ -134,6 +148,7 @@ public class Zombie extends Sprite {
                         zombiePosition.y -= zombieDirection.y * 32;
                     }
                     this.setPosition(zombiePosition);
+                    this.setDirection(zombieDirection);
                     return;
                 }
             }
@@ -177,5 +192,9 @@ public class Zombie extends Sprite {
     
     public Vector2f getDirection() {
         return direction;
+    }
+    
+    public void setDirection(Vector2f direction) {
+        this.direction = direction;
     }
 }

@@ -17,6 +17,8 @@ public class C {
         BACK("back"),
         CLICK_BUTTON("click_button"),
         CROSSHAIR_MOVED("crosshair_moved"),
+        NEXT_ZOMBIE("next_zombie"),
+        PREV_ZOMBIE("prev_zombie"),
         ACTION("action");
 
         public String name;

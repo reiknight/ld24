@@ -36,6 +36,8 @@ public class MainState extends ManagedGameState {
         evm.addEvent(C.Events.MOVE_UP.name, new InputEvent(InputEvent.KEYBOARD, Input.KEY_W));
         evm.addEvent(C.Events.MOVE_DOWN.name, new InputEvent(InputEvent.KEYBOARD, Input.KEY_S));
         evm.addEvent(C.Events.ACTION.name, new InputEvent(InputEvent.KEYBOARD, Input.KEY_SPACE, (Integer) C.Logic.SELECT_OPTION_DELAY.data));
+        evm.addEvent(C.Events.NEXT_ZOMBIE.name, new InputEvent(InputEvent.KEYBOARD, Input.KEY_J, (Integer) C.Logic.SELECT_OPTION_DELAY.data));
+        evm.addEvent(C.Events.PREV_ZOMBIE.name, new InputEvent(InputEvent.KEYBOARD, Input.KEY_K, (Integer) C.Logic.SELECT_OPTION_DELAY.data));
                 
         //Load textures
         tm.addTexture(C.Textures.ZOMBIE.name, C.Textures.ZOMBIE.path);
