@@ -122,6 +122,7 @@ public class Zombie extends Entity {
                     if(!blockedByWall) {
                         if(pm.testCollisionPolygon(this, enemy.getVision())) {
                             setAlive(false);
+                            sm.playSound(C.Sounds.FIRE.name);
                             return;
                         }
                     }

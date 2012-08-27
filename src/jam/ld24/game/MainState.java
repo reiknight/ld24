@@ -49,6 +49,7 @@ public class MainState extends ManagedGameState {
         //Load sounds
         sm.addSound(C.Sounds.ZOMBIE_BITE.name, C.Sounds.ZOMBIE_BITE.path);
         sm.addSound(C.Sounds.ZOMBIE_GROWL.name, C.Sounds.ZOMBIE_GROWL.path);
+        sm.addSound(C.Sounds.FIRE.name, C.Sounds.FIRE.path);
         
         restart();
     }
