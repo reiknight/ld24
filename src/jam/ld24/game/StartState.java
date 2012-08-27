@@ -70,7 +70,7 @@ public class StartState extends ManagedGameState {
             CrossHair crosshair = (CrossHair) em.getEntity(C.Entities.CROSSHAIR.name);
                                 
             if(pm.testCollisionsEntity(crosshair, button_start)) {
-                //((ManagedGameState)game.getState(C.States.MAIN_STATE.value)).restart();
+                ((MainState)game.getState(C.States.MAIN_STATE.value)).restart();
                 game.enterState(C.States.MAIN_STATE.value, new FadeOutTransition(), new FadeInTransition());
             }
         }

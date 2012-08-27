@@ -55,4 +55,11 @@ public class LevelManager {
     public boolean isCleared() {
         return levels.get(loadedLevel).isCleared();
     }
+
+    public void clearLevels() {
+        for(int i = 0; i < levels.size(); i++) {
+            levels.get(i).clear();
+        }
+        levels.clear();
+    }
 }

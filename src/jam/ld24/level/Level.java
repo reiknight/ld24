@@ -134,4 +134,9 @@ public class Level {
         return cleared;
     }
 
+    void clear() {
+        em.setGameState(this.name);
+        em.clear();
+    }
+
 }

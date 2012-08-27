@@ -13,9 +13,7 @@ public class Zombie0World extends StateBasedGame {
         this.addState(new MainState(C.States.MAIN_STATE.value));
         this.addState(new CreditsState(C.States.CREDITS_STATE.value));
         
-        //this.enterState(C.States.START_STATE.value);
-        this.enterState(C.States.MAIN_STATE.value);
-        //this.enterState(C.States.CREDITS_STATE.value);
+        this.enterState(C.States.START_STATE.value);
     }
     
     public static void main(String[] args) throws SlickException 

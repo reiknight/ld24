@@ -41,9 +41,7 @@ public class MainState extends ManagedGameState {
         tm.addTexture(C.Textures.ENEMY.name, C.Textures.ENEMY.path);
         tm.addTexture(C.Textures.WALL.name, C.Textures.WALL.path);
         
-        lm.addLevel(new Level("level_0"));
-        lm.addLevel(new Level("level_1"));
-        lm.loadLevel(0);
+        restart();
     }
     
     @Override
@@ -57,7 +55,7 @@ public class MainState extends ManagedGameState {
         
         if(lm.isCleared()) {
             if(!lm.loadNextLevel()) {
-                game.enterState(C.States.START_STATE.value, new FadeOutTransition(), new FadeInTransition());
+                game.enterState(C.States.CREDITS_STATE.value, new FadeOutTransition(), new FadeInTransition());
             }
         }
         else {
@@ -67,5 +65,12 @@ public class MainState extends ManagedGameState {
         if(evm.isHappening(C.Events.CLOSE_WINDOW.name, gc)) {
             gc.exit();
         }
+    }
+
+    void restart() {
+        lm.clearLevels();
+        lm.addLevel(new Level("level_0"));
+        lm.addLevel(new Level("level_1"));
+        lm.loadLevel(0);
     }
 }
