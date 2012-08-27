@@ -42,7 +42,7 @@ public class CreditsState extends ManagedGameState {
         g.drawString("art by", 600, 430);
         g.drawString("@_Dreisa_", 600, 450);
         g.drawString("special thanks", 600, 490);
-        g.drawString("@hmudarra_", 600, 510);
+        g.drawString("Our dog Zeus", 600, 510);
         em.render(container, g);
     }
 

@@ -36,7 +36,18 @@ public class InstructionsState extends ManagedGameState {
         em.setGameState(C.States.INSTRUCTIONS_STATE.name);
         g.setColor(Color.white);
         g.drawString("press <SPACE> to back", 530, 50);
-        g.drawString("Instructions", 600, 350);
+        g.drawString("Instructions", 100, 50);
+        
+        g.drawString("You are the Zombie 0!", 100, 100);
+        g.drawString("Bite enemies and turn them to zombies.", 100, 115);
+        g.drawString("Bring humanity to the next evolution!", 100, 130);
+        
+        g.drawString("Whatch out! You have 60 seconds before they escape!", 100, 169);
+        
+        
+        g.drawString("WASD: Movement", 100, 200);
+        g.drawString("Space: Bite enemy", 100, 215);
+        
         em.render(container, g);
     }
 
