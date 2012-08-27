@@ -68,7 +68,7 @@ public class Enemy extends Sprite {
  
     @Override
     public void render(GameContainer gc, Graphics g) {
-        g.setColor(Color.yellow);
+        g.setColor(Color.red);
         //g.drawString(name, posx, posy);
         g.draw(vision);
         

@@ -174,8 +174,7 @@ public class Level {
 
     private void restart() {
         clear();
-        TileSet ts = new TileSet(C.Textures.TILE_SET.name, C.Textures.TILE_SET.path, 
-                (Integer)C.Logic.TILE_SIZE.data);
+        TileSet ts = new TileSet(C.Textures.TILE_SET.name, (Integer)C.Logic.TILE_SIZE.data);
         
         int[][] map = null;
         try {
