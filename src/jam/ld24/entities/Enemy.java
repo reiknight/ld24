@@ -1,8 +1,10 @@
 package jam.ld24.entities;
 
+import infinitedog.frisky.entities.Entity;
 import infinitedog.frisky.entities.Sprite;
 import jam.ld24.game.C;
 import jam.ld24.tiles.CollisionMap;
+import jam.ld24.tiles.TileSet;
 import java.util.Random;
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.Color;
@@ -17,7 +19,7 @@ import org.newdawn.slick.geom.Vector2f;
  *
  * @author InfiniteDog
  */
-public class Enemy extends Sprite {
+public class Enemy extends Entity {
     private static final int IDLE = 0;
     private static final int MOVING = 1;
     private static final int CHANGE_DIRECTION = 2;
@@ -26,18 +28,23 @@ public class Enemy extends Sprite {
     private boolean alive;
     private boolean active;
     private Polygon vision = new Polygon();
-    private final Vector2f direction;
+    private Vector2f direction;
     private CollisionMap cm;
     protected float speed = (Float) C.Logic.ENEMY_SPEED.data;
     protected int thinkTime = (Integer) C.Logic.ENEMY_THINK_TIME.data;
     private int state = IDLE;
-
+    private final String name;
+    private int frame;
+    private TileSet tileSet = new TileSet(C.Textures.TILE_SET.name, 
+        (Integer) C.Logic.TILE_SIZE.data);
+        
     public Enemy() {
-        super(C.Textures.ENEMY.name);
         name =  C.Entities.ENEMY.name + id++;
         group = C.Groups.ENEMIES.name;
         alive = true;
-        direction = new Vector2f(0, 1);
+        setDirection(new Vector2f(0, 1));
+        setWidth((Integer) C.Logic.TILE_SIZE.data);
+        setHeight((Integer) C.Logic.TILE_SIZE.data);
     }
     
     public Enemy(int x, int y) {
@@ -72,7 +79,7 @@ public class Enemy extends Sprite {
         //g.drawString(name, posx, posy);
         g.draw(vision);
         
-        super.render(gc, g);
+        tileSet.render(frame, getX(), getY());
     }
     
     @Override
@@ -112,20 +119,16 @@ public class Enemy extends Sprite {
                 break;
             case CHANGE_DIRECTION:
                 if(behavior < 2) {
-                    direction.x = 0;
-                    direction.y = 1;
+                    setDirection(new Vector2f(0, 1));
                 }
                 else if(behavior < 4) {
-                    direction.x = 0;
-                    direction.y = -1;
+                    setDirection(new Vector2f(0, -1));
                 }
                 else if(behavior < 6) {
-                    direction.x = 1;
-                    direction.y = 0;
+                    setDirection(new Vector2f(1, 0));
                 }
                 else {
-                    direction.x = -1;
-                    direction.y = 0;
+                    setDirection(new Vector2f(-1, 0));
                 }
                 state = MOVING;
                 break;
@@ -151,16 +154,21 @@ public class Enemy extends Sprite {
         //Update vision
         float posx = getCenter().x;
         float posy = getCenter().y;
+        
         vision = new Polygon();
-        vision.addPoint(posx, posy);
+        
         if(direction.y == 0) {
             vision.addPoint(posx + 100 * direction.x, posy - 75);
             vision.addPoint(posx + 100 * direction.x, posy + 75);
+            posx += direction.x * (Integer) C.Logic.TILE_SIZE.data / 2;
         }
         else {
             vision.addPoint(posx + 75, posy + 100 * direction.y);
             vision.addPoint(posx - 75, posy + 100 * direction.y);
+            posy += direction.y * (Integer) C.Logic.TILE_SIZE.data / 2;
         }
+        
+        vision.addPoint(posx, posy);
     }
     
     public Polygon getVision() {
@@ -169,5 +177,15 @@ public class Enemy extends Sprite {
     
     public void setCollisionMap(CollisionMap collisionMap) {
         this.cm = collisionMap;
+    }
+
+    public void setDirection(Vector2f direction) {
+        this.direction = direction;
+        if(direction.x == 0) {
+            if(direction.y == 1) frame = 28; else frame = 26;
+        }
+        else {
+            if(direction.x == 1) frame = 27; else frame = 25;
+        }
     }
 }

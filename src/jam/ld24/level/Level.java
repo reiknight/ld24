@@ -94,7 +94,7 @@ public class Level {
         // Init walls
         for(int i = 0; i < map.length; i++) {
             for(int j = 0; j < map[i].length; j++) {
-                if(map[i][j] == 1) {
+                if(map[i][j] != 13) {
                     Wall wall = new Wall();
                     wall.setPosition(new Vector2f(j * (Integer) C.Logic.TILE_SIZE.data, 
                             i * (Integer) C.Logic.TILE_SIZE.data));
