@@ -98,7 +98,7 @@ public class Level {
                     Wall wall = new Wall();
                     wall.setPosition(new Vector2f(j * (Integer) C.Logic.TILE_SIZE.data, 
                             i * (Integer) C.Logic.TILE_SIZE.data));
-                    walls.add(wall);
+                    em.addEntity(wall.getName(), wall);
                 }
             }
         }
@@ -111,11 +111,6 @@ public class Level {
         // Render all entities
         em.render(gc, g);
         
-        // Render walls
-        for(int i = 0, l = walls.size(); i < l; i++) {
-            walls.get(i).render(gc, g);
-        }
-              
         g.setColor(Color.white);
         g.drawString("Time: " + levelTime / 1000, 700, 10);
         

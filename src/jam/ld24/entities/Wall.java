@@ -16,6 +16,8 @@ public class Wall extends Entity {
         
     public Wall() {
         this.name = C.Entities.WALL.name + id++;
-        group = C.Groups.WALLS.name;
+        this.group = C.Groups.WALLS.name;
+        setWidth((Integer)C.Logic.TILE_SIZE.data);
+        setHeight((Integer)C.Logic.TILE_SIZE.data);
     }
 }

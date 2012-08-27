@@ -9,8 +9,10 @@ import infinitedog.frisky.sounds.SoundManager;
 import jam.ld24.game.C;
 import jam.ld24.tiles.CollisionMap;
 import java.util.ArrayList;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.geom.Line;
 import org.newdawn.slick.geom.Vector2f;
 
 public class Zombie extends Sprite {
@@ -49,6 +51,15 @@ public class Zombie extends Sprite {
     @Override
     public void render(GameContainer gc, Graphics g) {
         super.render(gc, g);
+        
+        /*g.setColor(Color.red);
+        ArrayList<Entity> enemies = em.getEntityGroup(C.Groups.ENEMIES.name);
+        for(int i = 0; i < enemies.size(); i++) {
+            Enemy enemy = (Enemy) enemies.get(i);
+            Vector2f enemyCenter = enemy.getCenter();
+            Line l = new Line(enemyCenter, this.getCenter());
+            g.draw(l);
+        }*/
     }
     
     @Override
@@ -82,11 +93,30 @@ public class Zombie extends Sprite {
                 direction = new Vector2f(0, 1);
             }
             
+            // Check if any enemy see you
             ArrayList<Entity> enemies = em.getEntityGroup(C.Groups.ENEMIES.name);
+            ArrayList<Entity> walls = em.getEntityGroup(C.Groups.WALLS.name);
+            Vector2f playerCenter = this.getCenter();
+            
             for(int i = 0; i < enemies.size(); i++) {
-                if(pm.testCollisionPolygon(this, ((Enemy)enemies.get(i)).getVision())) {
-                    setAlive(false);
-                    return;
+                Enemy enemy = (Enemy) enemies.get(i);
+                Vector2f enemyCenter = enemy.getCenter();
+                Line l = new Line(enemyCenter, playerCenter);
+                boolean blockedByWall = false;
+                
+                for(int j = 0; j < walls.size(); j++) {
+                    Wall wall = (Wall) walls.get(j);
+                    if(pm.testCollisionPolygon(wall, l)) {
+                        blockedByWall = true;
+                        break;
+                    }
+                }
+            
+                if(!blockedByWall) {
+                    if(pm.testCollisionPolygon(this, enemy.getVision())) {
+                        setAlive(false);
+                        return;
+                    }
                 }
             }
             
