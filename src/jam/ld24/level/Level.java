@@ -16,6 +16,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.logging.Logger;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Vector2f;
@@ -32,6 +33,8 @@ public class Level {
     
     private EntityManager em = EntityManager.getInstance();
     private boolean cleared = false;
+    
+    private int elapsedTime = 0;
 
     public Level(String name) {
         TileSet ts = new TileSet(C.Textures.TILE_SET.name, C.Textures.TILE_SET.path, 
@@ -115,6 +118,11 @@ public class Level {
         tm.render();
         // Render all entities
         em.render(gc, g);
+        
+        if(elapsedTime > 0) {
+            g.setColor(Color.white);
+            g.drawString("Stage cleared!", 275, 225);
+        }
     }
 
     public void update(GameContainer gc, int delta) {
@@ -125,7 +133,10 @@ public class Level {
         // Check victory/defeat conditions
         ArrayList<Entity> enemies = em.getEntityGroup(C.Groups.ENEMIES.name);
         if(enemies.isEmpty()) {
-            cleared = true;
+            elapsedTime += delta;
+            if(elapsedTime > (Integer) C.Logic.NEXT_LEVEL_TIME.data) {
+                cleared = true;
+            }
         }
         
     }

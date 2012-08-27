@@ -106,6 +106,7 @@ public class C {
         ZOMBIE_SPEED((float)0.25),
         SELECT_OPTION_DELAY(500),
         PUBLISHER_TIME(2000),
+        NEXT_LEVEL_TIME(1500),
         TILE_SIZE(32);
 
         public Object data;
