@@ -32,7 +32,9 @@ public class C {
         START_BACKGROUND("start_background", "resources/textures/start_background.png"),
         ZOMBIE("zombie", "resources/textures/zombie.png"),
         AVATAR("avatar", "resources/textures/zombie_0.png"),
-        BUTTON("button", "resources/textures/button.png"),
+        BUTTON_CREDITS("button_credits", "resources/textures/button_credits.png"),
+        BUTTON_PLAY("button_play", "resources/textures/button_play.png"),
+        BUTTON_INSTRUCTIONS("button_instructions", "resources/textures/button_instructions.png"),
         CROSSHAIR("crosshair", "resources/textures/crosshair.png"),
         WALL("wall", "resources/textures/wall.png"),
         TILE_SET("tile_set", "resources/textures/tile_set.png"),
@@ -109,7 +111,7 @@ public class C {
 
      public static enum Logic {
         ZOMBIE_SPEED((float)0.15),
-        ENEMY_SPEED((float)0.25),
+        ENEMY_SPEED((float)0.20),
         SELECT_OPTION_DELAY(500),
         PUBLISHER_TIME(2000),
         NEXT_LEVEL_TIME(1500),
@@ -124,8 +126,9 @@ public class C {
     }
 
      public static enum Buttons {
-        START_GAME(Textures.BUTTON.name, "Start", new Vector2f(600, 175), new Vector2f(45, 25)),
-        INSTRUCTIONS(Textures.BUTTON.name, "Instructions", new Vector2f(600, 275), new Vector2f(45, 25));
+        CREDITS(Textures.BUTTON_CREDITS.name, "", new Vector2f(150, 450), new Vector2f(45, 25)),
+        START_GAME(Textures.BUTTON_PLAY.name, "", new Vector2f(340, 450), new Vector2f(45, 25)),
+        INSTRUCTIONS(Textures.BUTTON_INSTRUCTIONS.name, "", new Vector2f(550, 450), new Vector2f(45, 25));
 
         public String textureName;
         public String label;

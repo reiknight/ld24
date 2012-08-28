@@ -17,7 +17,7 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 
 public class StartState extends ManagedGameState {
     private Image background;
-    private Button button_start, button_instructions;
+    private Button button_start, button_instructions, button_credits;
     
     private boolean start_game = false;
     
@@ -36,7 +36,9 @@ public class StartState extends ManagedGameState {
                 new Rectangle(0, 0, C.SCREEN_WIDTH, C.SCREEN_HEIGHT)));
         //Load textures
         tm.addTexture(C.Textures.START_BACKGROUND.name, C.Textures.START_BACKGROUND.path);
-        tm.addTexture(C.Textures.BUTTON.name, C.Textures.BUTTON.path);
+        tm.addTexture(C.Textures.BUTTON_CREDITS.name, C.Textures.BUTTON_CREDITS.path);
+        tm.addTexture(C.Textures.BUTTON_PLAY.name, C.Textures.BUTTON_PLAY.path);
+        tm.addTexture(C.Textures.BUTTON_INSTRUCTIONS.name, C.Textures.BUTTON_INSTRUCTIONS.path);
         tm.addTexture(C.Textures.CROSSHAIR.name, C.Textures.CROSSHAIR.path);
         //Load entities
         button_start = new Button(C.Buttons.START_GAME.textureName,
@@ -44,11 +46,18 @@ public class StartState extends ManagedGameState {
                 C.Buttons.START_GAME.label, C.Buttons.START_GAME.labelPosition);
         button_start.setPosition(C.Buttons.START_GAME.position);
         em.addEntity(button_start.getName(), button_start);
+        
         button_instructions = new Button(C.Buttons.INSTRUCTIONS.textureName,
                 "button_instructions", C.Groups.BUTTONS.name,
                 C.Buttons.INSTRUCTIONS.label, C.Buttons.INSTRUCTIONS.labelPosition);
         button_instructions.setPosition(C.Buttons.INSTRUCTIONS.position);
         em.addEntity(button_instructions.getName(), button_instructions);
+        
+        button_credits = new Button(C.Buttons.CREDITS.textureName,
+                "button_credits", C.Groups.BUTTONS.name,
+                C.Buttons.INSTRUCTIONS.label, C.Buttons.CREDITS.labelPosition);
+        button_credits.setPosition(C.Buttons.CREDITS.position);
+        em.addEntity(button_credits.getName(), button_credits);
         
         
         //Add Crosshair
@@ -81,6 +90,9 @@ public class StartState extends ManagedGameState {
             }
             else if(pm.testCollisionsEntity(crosshair, button_instructions)) {
                 game.enterState(C.States.INSTRUCTIONS_STATE.value, new FadeOutTransition(), new FadeInTransition());
+            }
+            else if(pm.testCollisionsEntity(crosshair, button_credits)) {
+                game.enterState(C.States.CREDITS_STATE.value, new FadeOutTransition(), new FadeInTransition());
             }
         }
         if(evm.isHappening(C.Events.CLOSE_WINDOW.name, gc)) {
